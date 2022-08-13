@@ -61,6 +61,8 @@ const Dashboard = () => {
 		setOpen(true);
 	}
 
+	
+
 	const handleClose = () => setOpen(false);
 
 	const handleFileInput = (e) => {
@@ -68,19 +70,30 @@ const Dashboard = () => {
 	}
 
 	const userDetailsSubmit = () => {
+		debugger;
 		const formData = new FormData();
 		formData.append( 
 	        "myFile", 
-	        inputfile.selectedFile, 
+	        inputfile, 
 	    );
-    	formData.append("action","userupdate"); 
+	    formData.append("email",userdeatail.email); 
+	    formData.append("mobno",userdeatail.mobno); 
+	    formData.append("password",userdeatail.password); 
+	    formData.append("name",userdeatail.name); 
+		formData.append("action","userupdate"); 
     
     // Details of the uploaded file 
-    console.log(this.state.selectedFile); 
+   
     
     // Request made to the backend api 
     // Send formData object 
     axios.post("http://localhost/usermgmt_api/index.php", formData); 
+	}
+
+	const handleUpdateuser = (e) => {
+		const {name,value} = e.target;
+		setUserdetail({...userdeatail,[name]:value})
+		
 	}
 
 	return(
@@ -94,13 +107,13 @@ const Dashboard = () => {
 	  				<Grid item xs={4}>
 					 	<FormControl variant="standard">
 							<InputLabel htmlFor="name-helper">Name</InputLabel>
-							<Input id="name-helper" value={userdeatail.name} aria-describedby="component-helper-text" fullWidth={true}/>
+							<Input id="name-helper" value={userdeatail.name} name="name" aria-describedby="component-helper-text" fullWidth={true} onChange={handleUpdateuser}/>
 						</FormControl>
 					</Grid>
 					<Grid item xs={4}>
 						<FormControl variant="standard">
 							<InputLabel htmlFor="email-helper">Email</InputLabel>
-							<Input id="email-helper" value={userdeatail.email} aria-describedby="component-helper-text"/>
+							<Input id="email-helper" value={userdeatail.email} aria-describedby="component-helper-text" onChange={handleUpdateuser} name="email"/>
 						</FormControl>
 
 					</Grid>
@@ -108,13 +121,13 @@ const Dashboard = () => {
 					<Grid item xs={4}>
 					 	<FormControl variant="standard">
 							<InputLabel htmlFor="phone-helper">Phone Number</InputLabel>
-							<Input id="phone-helper" value={userdeatail.mobno} aria-describedby="component-helper-text" fullWidth={true}/>
+							<Input id="phone-helper" value={userdeatail.mobno} aria-describedby="component-helper-text" fullWidth={true} onChange={handleUpdateuser} name="mobno"/>
 						</FormControl>
 					</Grid>
 					<Grid item xs={4}>
 						<FormControl variant="standard">
 							<InputLabel htmlFor="password-helper">Password</InputLabel>
-							<Input id="password-helper" type="password" aria-describedby="component-helper-text"/>
+							<Input id="password-helper" type="password" aria-describedby="component-helper-text" onChange={handleUpdateuser} name="password"/>
 						</FormControl>
 
 					</Grid>
